@@ -7,7 +7,7 @@ app.use("/api/v1/", routeTest);
 
 mongoose
   .connect(
-    "mongodb+srv://yqy1998:Elliepoo-Chrisbun@meetfood.ro3wd3i.mongodb.net/?retryWrites=true&w=majority",
+    "mongodb+srv://yqy1998:<password>@meetfood.ro3wd3i.mongodb.net/?retryWrites=true&w=majority",
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
