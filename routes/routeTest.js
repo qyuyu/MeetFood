@@ -1,16 +1,16 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const UserTest = require("../models/userTest");
+const UserTest = require('../models/userTest');
 
-router.get("/meetfood", async (req, res) => {
-  res.send("<h2>Hello World!</h2>");
+router.get('/meetfood', async (req, res) => {
+  res.send('<h2>Hello World!</h2>');
   const user = new UserTest({
-    firstName: "Chris",
-    userName: "qyuyu",
+    firstName: 'Chris',
+    userName: 'qyuyu',
   });
 
   await user.save();
-  console.log("test");
+  console.log('test');
 });
 
 module.exports = router;
