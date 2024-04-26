@@ -1,5 +1,5 @@
 const CognitoExpress = require('cognito-express');
-const config = require('../config/production.json');
+const config = require('../config/production');
 const User = require('../models/user');
 
 // Initializing CognitoExpress constructor
