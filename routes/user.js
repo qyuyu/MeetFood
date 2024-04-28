@@ -36,4 +36,21 @@ router.post(
   UserController.updateProfilePhoto,
 );
 
+// delete user
+router.delete('/delete', isToCCognitoAuthenticated, UserController.deleteUser);
+
+// delete Video from collection
+router.delete(
+  '/videos/videoCollection/:videoPostId',
+  isToCCognitoAuthenticated,
+  UserController.deleteVideoInCollection,
+);
+
+// add Video to collection
+router.post(
+  '/videos/videoCollection/:videoPostId',
+  isToCCognitoAuthenticated,
+  UserController.addVideoInCollection,
+);
+
 module.exports = router;
