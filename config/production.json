@@ -11,6 +11,10 @@
   "IAMSECRETACCESSKEY": "123456",
   "S3AccessKeyID": "xxx",
   "S3SecretAccessKey": "sss",
-  "S3ProfilePhotoBucketName": "",
-  "S3ProfilePhotoUrlPrefix": "https://"
+  "S3ProfilePhotoBucketName": "meetfood-qingyu/profile-photo",
+  "S3ProfilePhotoUrlPrefix": "https://",
+  "S3CoverImageBucketName": "meetfood-qingyu/cover-image",
+  "S3CoverImageUrlPrefix": "https://",
+  "S3VideoBucketName": "meetfood-qingyu/video",
+  "S3VideoUrlPrefix": "https://"
 }

@@ -4,7 +4,6 @@ const AWS_S3 = require('../util/aws-s3');
 const { getFileBaseName } = require('../util/path');
 const config = require('../config/production.json');
 const { adminDeleteUser } = require('../util/aws-cognito');
-const videoPost = require('../models/videoPost');
 
 const s3 = AWS_S3.setS3Credentials;
 
@@ -301,10 +300,49 @@ exports.deleteUser = async (req, res) => {
         }
       });
     }
+
     // TODO: Delete videos when we finish Video APIs
+    await User.populate(user, {
+      path: 'videos',
+      populate: { path: 'videoPost' },
+    });
+
+    for (let v of user.videos) {
+      // delete videos in AWS S3
+      let videoPost = v.videoPost;
+
+      let err = AWS_S3.deleteVideoInS3(videoPost.url);
+
+      if (err) {
+        return res.status(500).json({
+          errors: [
+            {
+              msg: 'Error occured while trying to delete the video file from S3',
+              err,
+            },
+          ],
+        });
+      }
+      // delete video cover images in AWS S3
+      err = AWS_S3.deleteVideoInS3CoverImage(videoPost.coverImageUrl);
+      if (err) {
+        return res.status(500).json({
+          errors: [
+            {
+              msg: 'Error occured while trying to delete the cover Image from S3',
+              err,
+            },
+          ],
+        });
+      }
+    }
+
+    const userObjectId = user._id;
+
+    // Delete videoPost records from DB
+    await VideoPost.deleteMany({ userId: userObjectId });
 
     // Delete user from MongoDB
-    const userObjectId = user._id;
     await User.deleteOne({ _id: userObjectId });
 
     // Delete user from AWS Cognito
@@ -381,6 +419,17 @@ exports.addVideoInCollection = async (req, res) => {
   }
 };
 
+/**
+ * @api {post} /api/v1/user/videos/videoCollection/:videoPostId
+ * @apiName delete video in collections
+ * @apiGroup User
+ * @apiDescription delete video in collections
+ *
+ * @apiParam (params) {String} videoPostId
+ *
+ * @apiError return corresponding errors
+ */
+
 exports.deleteVideoInCollection = async (req, res) => {
   // find user and check if exist
   const user = await User.findById(req.userId);
@@ -395,7 +444,7 @@ exports.deleteVideoInCollection = async (req, res) => {
     let post = await VideoPost.findById(videoPostId);
     if (!post) {
       return res
-        .status(400)
+        .status(404)
         .json({ errors: [{ msg: 'No video post found in the database.' }] });
     }
 
@@ -406,12 +455,14 @@ exports.deleteVideoInCollection = async (req, res) => {
       ).length == 0
     ) {
       return res
-        .status(400)
+        .status(404)
         .json({ msg: 'the video post is not in your collection' });
     }
 
-    // delete videoPostId to the user's collection
-    user.collections.pull({ videoPost: videoPostId });
+    // delete videoPostId in the user's collection
+    user.collections = user.collections.filter(
+      (collection) => collection.videoPost !== videoPostId,
+    );
 
     // update the videoPost countCollection
     post.countCollections -= 1;
