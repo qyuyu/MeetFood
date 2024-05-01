@@ -4,7 +4,11 @@ import { Text, View } from "react-native";
 
 export default function Layout() {
   return (
-    <Tabs>
+    <Tabs
+      screenOptions={{
+        headerTitleAlign: "center",
+      }}
+    >
       <Tabs.Screen
         name="video/[id]"
         options={{
@@ -14,7 +18,7 @@ export default function Layout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "HOME",
+          title: "Explore",
           tabBarLabel: ({ focused }) => (
             <Text style={{ color: focused ? "#231f20" : "#999693" }}>Home</Text>
           ),
@@ -54,9 +58,9 @@ export default function Layout() {
       <Tabs.Screen
         name="userProfile"
         options={{
-          title: "USER",
+          title: "Me",
           tabBarLabel: ({ focused }) => (
-            <Text style={{ color: focused ? "#231f20" : "#999693" }}>User</Text>
+            <Text style={{ color: focused ? "#231f20" : "#999693" }}>Me</Text>
           ),
           tabBarIcon: ({ focused }) => (
             <FontAwesome
