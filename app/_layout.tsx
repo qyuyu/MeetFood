@@ -13,12 +13,19 @@ export default function Layout() {
         name="video/[id]"
         options={{
           href: null,
+          headerShown: false,
+          tabBarStyle: {
+            display: "none",
+          },
         }}
       />
       <Tabs.Screen
         name="index"
         options={{
           title: "Explore",
+          headerStyle: {
+            backgroundColor: "#f6f6f6",
+          },
           tabBarLabel: ({ focused }) => (
             <Text style={{ color: focused ? "#231f20" : "#999693" }}>Home</Text>
           ),

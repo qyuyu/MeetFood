@@ -1,5 +1,6 @@
 import { View, Image, Text, StyleSheet } from "react-native";
 import { useNavigation } from "expo-router";
+import { ScreenNavigationProps } from "../type";
 
 export interface ItemCardProps {
   imgSource: string;
@@ -14,7 +15,7 @@ export const ItemCard = ({
   restaurantName,
   id,
 }: ItemCardProps) => {
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<ScreenNavigationProps>();
 
   return (
     <View style={styles.container}>
