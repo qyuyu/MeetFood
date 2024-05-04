@@ -1,4 +1,4 @@
-import { View, Image, Text, StyleSheet } from "react-native";
+import { View, Image, Text, StyleSheet, Pressable } from "react-native";
 import { useNavigation } from "expo-router";
 import { ScreenNavigationProps } from "../type";
 
@@ -19,8 +19,8 @@ export const ItemCard = ({
 
   return (
     <View style={styles.container}>
-      <View
-        onTouchEnd={() => {
+      <Pressable
+        onPress={() => {
           navigation.navigate("video/[id]", { id });
         }}
       >
@@ -35,7 +35,7 @@ export const ItemCard = ({
           <Text style={styles.dishTitle}>{dishTitle}</Text>
           <Text style={styles.restaurantTitle}>{restaurantName}</Text>
         </View>
-      </View>
+      </Pressable>
     </View>
   );
 };

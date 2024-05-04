@@ -17,6 +17,7 @@ export default function Layout() {
           tabBarStyle: {
             display: "none",
           },
+          unmountOnBlur: true,
         }}
       />
       <Tabs.Screen

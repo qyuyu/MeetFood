@@ -7,7 +7,7 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <VideoList />
+      <VideoList initialVideoId={id as string} />
     </SafeAreaView>
   );
 }

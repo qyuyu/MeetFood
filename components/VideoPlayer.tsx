@@ -1,20 +1,34 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { View, StyleSheet, Text, Pressable } from "react-native";
 import { Video, ResizeMode, AVPlaybackStatusSuccess } from "expo-av";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useNavigation } from "expo-router";
 import { ScreenNavigationProps } from "../type";
-import { useWindowDimensions } from "react-native";
 
-export const VideoPlayer = () => {
+interface VideoPlayerProps {
+  videoUrl: string;
+  dishTitle: string;
+  restaurantName: string;
+  videoHeight: number;
+  activeVideoIndex: number;
+  selfVideoIndex: number;
+  posterUrl: string;
+}
+
+export const VideoPlayer = ({
+  videoUrl,
+  dishTitle,
+  restaurantName,
+  videoHeight,
+  activeVideoIndex,
+  selfVideoIndex,
+  posterUrl,
+}: VideoPlayerProps) => {
   const insets = useSafeAreaInsets();
   const navigation = useNavigation<ScreenNavigationProps>();
   const video = useRef<Video>(null);
   const [status, setStatus] = useState<Partial<AVPlaybackStatusSuccess>>({});
-  const { height, width } = useWindowDimensions();
-  const videoHeight = height - insets.top - insets.bottom;
-  const videoWidth = width - insets.left - insets.right;
 
   const toggleVideoPlay = () => {
     if (video.current) {
@@ -24,15 +38,22 @@ export const VideoPlayer = () => {
     }
   };
 
+  useEffect(() => {
+    if (selfVideoIndex === activeVideoIndex) {
+      video.current?.playAsync();
+    } else {
+      video.current?.pauseAsync();
+    }
+  }, [activeVideoIndex]);
   return (
-    <View
-      style={{ ...styles.container, height: videoHeight, width: videoWidth }}
-    >
+    <View style={{ ...styles.container, height: videoHeight }}>
       <Video
         ref={video}
         style={styles.video}
+        posterSource={{ uri: posterUrl }}
+        posterStyle={{ height: videoHeight }}
         source={{
-          uri: "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
+          uri: videoUrl,
         }}
         resizeMode={ResizeMode.STRETCH}
         isLooping
@@ -91,8 +112,8 @@ export const VideoPlayer = () => {
           paddingLeft: 12,
         }}
       >
-        <Text style={styles.dishTitle}>Fried Noodle</Text>
-        <Text style={styles.restaurantName}>Chefus</Text>
+        <Text style={styles.dishTitle}>{dishTitle}</Text>
+        <Text style={styles.restaurantName}>{restaurantName}</Text>
       </View>
       <View
         style={{

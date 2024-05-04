@@ -4,16 +4,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { BASE_URL } from "../utils";
+import { VideoItemsListAtom } from "../atom";
+import { useAtom } from "jotai";
+import { VideoPostItem } from "../type";
 
-interface VideoPostItem {
-  _id: string;
-  postTitle: string;
-  coverImageUrl: string;
-  restaurantName: string;
-  videoUrl: string;
-}
 export const ItemList = () => {
-  const [itemsData, setItemsData] = useState<VideoPostItem[]>([]);
+  const [itemsData, setItemsData] = useAtom(VideoItemsListAtom);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
