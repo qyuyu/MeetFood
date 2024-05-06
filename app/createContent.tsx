@@ -1,12 +1,13 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
+import { AuthGuard } from "../components/AuthGuard";
+import { CreateContentScreen } from "../components/CreateContentScreen";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Create Content Page</Text>
-      <StatusBar style="auto" />
-    </View>
+    <AuthGuard>
+      <CreateContentScreen />
+    </AuthGuard>
   );
 }
 

@@ -16,3 +16,10 @@ export interface VideoPostItem {
 }
 
 export type ScreenNavigationProps = NavigationProp<RootStackParamList>;
+
+export enum CreateContentScreenStep {
+  Record,
+  Review,
+  Publish,
+  Success,
+}

@@ -3,6 +3,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Text, View } from "react-native";
 import { Amplify, ResourcesConfig } from "aws-amplify";
 import amplifyconfig from "../amplifyconfiguration.json";
+import { colors } from "../constants";
 
 Amplify.configure(amplifyconfig as ResourcesConfig);
 
@@ -29,16 +30,20 @@ export default function Layout() {
         options={{
           title: "Explore",
           headerStyle: {
-            backgroundColor: "#f6f6f6",
+            backgroundColor: colors.mainBg,
           },
           tabBarLabel: ({ focused }) => (
-            <Text style={{ color: focused ? "#231f20" : "#999693" }}>Home</Text>
+            <Text
+              style={{ color: focused ? colors.mainText : colors.secondText }}
+            >
+              Home
+            </Text>
           ),
           tabBarIcon: ({ focused }) => (
             <FontAwesome
               name="home"
               size={20}
-              color={focused ? "#231f20" : "#999693"}
+              color={focused ? colors.mainText : colors.secondText}
             />
           ),
         }}
@@ -48,6 +53,10 @@ export default function Layout() {
         name="createContent"
         options={{
           title: "CREATE VIDEO",
+          headerShown: false,
+          tabBarStyle: {
+            display: "none",
+          },
           tabBarButton: (props) => (
             <View style={{ justifyContent: "center" }}>
               <FontAwesome.Button
@@ -57,7 +66,7 @@ export default function Layout() {
                 name="plus"
                 style={{
                   paddingRight: 0,
-                  backgroundColor: "#ff5722",
+                  backgroundColor: colors.primary,
                   width: 45,
                   flexDirection: "column",
                 }}
@@ -72,16 +81,20 @@ export default function Layout() {
         options={{
           title: "Me",
           headerStyle: {
-            backgroundColor: "#f6f6f6",
+            backgroundColor: colors.mainBg,
           },
           tabBarLabel: ({ focused }) => (
-            <Text style={{ color: focused ? "#231f20" : "#999693" }}>Me</Text>
+            <Text
+              style={{ color: focused ? colors.mainText : colors.secondText }}
+            >
+              Me
+            </Text>
           ),
           tabBarIcon: ({ focused }) => (
             <FontAwesome
               name="user-circle-o"
               size={18}
-              color={focused ? "#231f20" : "#999693"}
+              color={focused ? colors.mainText : colors.secondText}
             />
           ),
         }}
