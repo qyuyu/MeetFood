@@ -1,7 +1,7 @@
 import { Link } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
-import { ItemList } from "../components/itemList";
+import { ItemList } from "../components/ItemList";
 
 export default function App() {
   return (

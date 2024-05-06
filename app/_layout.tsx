@@ -1,6 +1,10 @@
 import { Tabs } from "expo-router";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Text, View } from "react-native";
+import { Amplify, ResourcesConfig } from "aws-amplify";
+import amplifyconfig from "../amplifyconfiguration.json";
+
+Amplify.configure(amplifyconfig as ResourcesConfig);
 
 export default function Layout() {
   return (
@@ -67,6 +71,9 @@ export default function Layout() {
         name="userProfile"
         options={{
           title: "Me",
+          headerStyle: {
+            backgroundColor: "#f6f6f6",
+          },
           tabBarLabel: ({ focused }) => (
             <Text style={{ color: focused ? "#231f20" : "#999693" }}>Me</Text>
           ),

@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet } from "react-native";
-import { ItemCard } from "./itemCard";
+import { ItemCard } from "./ItemCard";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
